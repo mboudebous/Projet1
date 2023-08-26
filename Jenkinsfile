@@ -33,18 +33,29 @@ pipeline {
     }
 }   */
                
-   stage('SonarQube Analysis') {
-  steps{
-    script {
-  def mvn = tool 'maven3';
-    withSonarQubeEnv() {
-      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=java -DskipTests=true"
-      
-    }
-  }
+  stage('SonarQube Analysis') {
+      updateGitlabCommitStatus name: 'SonarQube Analysis', state: 'pending'
   
+      nodejs(nodeJSInstallationName: 'nodejs') {
+        sh 'node -v'
+        withSonarQubeEnv() {
+          env.PATH = "$PATH:/home/jenkins/.dotnet"
+          env.PATH = "$PATH:/home/jenkins/.dotnet/tools"
+          script {
+            try {
+              sh '''
+                dotnet sonarscanner  begin /k:"MyKey"          
+                dotnet build fehlertracking.sln
+                dotnet sonarscanner  end        
+              '''
+              updateGitlabCommitStatus name: 'SonarQube Analysis', state: 'success'
+            } catch (ex) {
+              updateGitlabCommitStatus name: 'SonarQube Analysis', state: 'failed'
+            }
+          }
+        }
+      }
     }
-  } 
   
        
     }          
