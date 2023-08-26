@@ -19,15 +19,12 @@ pipeline {
         
         
         
-        stage("Compile"){
-            steps{
-                sh "mvn clean compile"
-            }
-        }
-        
-         stage("Test Cases"){
-            steps{
-                sh "mvn test"
+        stage('Build and Test C#') {
+            steps {
+                // Compiler et tester le code C#
+                sh 'dotnet restore'
+                sh 'dotnet build'
+                sh 'dotnet test'
             }
         }
         
