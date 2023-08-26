@@ -22,9 +22,11 @@ pipeline {
         stage('Build and Test C#') {
             steps {
                 // Compiler et tester le code C#
-                sh 'dotnet restore'
-                sh 'dotnet build'
-                sh 'dotnet test'
+                def projectPath = "${WORKSPACE}/var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
+"
+                sh 'dotnet restore ${projectPath}' 
+                sh 'dotnet build ${projectPath}'
+                sh 'dotnet test ${projectPath}'
             }
         }
         
