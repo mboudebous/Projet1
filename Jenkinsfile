@@ -15,7 +15,7 @@ pipeline {
      
         stage("Git Checkout"){
             steps{
-                git branch: 'main', credentialsId: 'ecde681b-5636-41da-aad5-6704576d1392', url: 'https://github.com/mboudebous/Projet1.git'
+                git branch: 'master', credentialsId: 'ecde681b-5636-41da-aad5-6704576d1392', url: 'https://github.com/mboudebous/Projet1.git'
             }
         }
         
