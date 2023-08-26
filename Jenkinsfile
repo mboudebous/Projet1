@@ -33,29 +33,25 @@ pipeline {
     }
 }   */
                
-  stage('SonarQube Analysis') {
-      updateGitlabCommitStatus name: 'SonarQube Analysis', state: 'pending'
-  
-      nodejs(nodeJSInstallationName: 'nodejs') {
-        sh 'node -v'
-        withSonarQubeEnv() {
-          env.PATH = "$PATH:/home/jenkins/.dotnet"
-          env.PATH = "$PATH:/home/jenkins/.dotnet/tools"
-          script {
-            try {
-              sh '''
-                dotnet sonarscanner  begin /k:"MyKey"          
-                dotnet build fehlertracking.sln
-                dotnet sonarscanner  end        
-              '''
-              updateGitlabCommitStatus name: 'SonarQube Analysis', state: 'success'
-            } catch (ex) {
-              updateGitlabCommitStatus name: 'SonarQube Analysis', state: 'failed'
+ stage('Build and Analyze') {
+            steps {
+                script {
+                    def scannerCmd = "${SONAR_SCANNER_HOME}/SonarScanner.MSBuild.exe"
+                    def sonarKey = 'Test'
+                    def sonarUrl = 'http://localhost:8094/' // Replace with your SonarQube server URL
+                    def sonarLogin = 'squ_ff98a54d2c9e4570aca14538ee78adc632de2bae'
+                    
+                    // Build your .NET project (e.g., dotnet build)
+                    sh 'dotnet build'
+
+                    // Run the SonarScanner for .NET
+                    sh "${scannerCmd} begin /k:${sonarKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}"
+                    sh 'dotnet restore'
+                    sh 'dotnet build'
+                    sh "${scannerCmd} end /d:sonar.login=${sonarLogin}"
+                }
             }
-          }
         }
-      }
-    }
   
        
     }          
