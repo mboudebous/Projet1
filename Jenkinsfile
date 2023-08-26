@@ -64,7 +64,7 @@ pipeline {
                 sh 'dotnet test ${projectPath}'
                 }
             }
-        }
+        
         
        stage("Sonarqube Analysis "){
             steps{
