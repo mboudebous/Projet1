@@ -16,32 +16,10 @@ pipeline {
                 git branch: 'master', credentialsId: 'ecde681b-5636-41da-aad5-6704576d1392', url: 'https://github.com/mboudebous/Projet1.git'
             }
         }
-        stage('Install Dependencies') {
-            steps {
-                // Installer les dépendances Node.js
-                sh 'npm install'
-            }
-        }
-        stage('Run Tests') {
-            steps {
-                // Exécuter les tests (par exemple, avec Jest)
-                sh 'npm test'
-            }
-        }
-        stage('Build and Deploy') {
-            steps {
-                // Build de l'application (par exemple, avec Webpack)
-                sh 'npm run build'
-                
-                // Déployer l'application (par exemple, via FTP, SCP, etc.)
-                // Assurez-vous d'ajuster cette étape en fonction de votre méthode de déploiement
-            }
-        }
-    }
-}
+    
         
         
-        //stage('Build and Test 222C#') {
+        stage('Build and Test 222C#') {
     steps {
         script {
             // Spécifiez le chemin complet du fichier .csproj
@@ -55,7 +33,7 @@ pipeline {
         }
     }
 
-        //stage('Build and Test C#') {
+        stage('Build and Test C#') {
             steps {
                 script {
                 def projectPath = "${WORKSPACE}/var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
@@ -65,7 +43,7 @@ pipeline {
                 }
             }
         
-        
+        }
        stage("Sonarqube Analysis "){
             steps{
                 withSonarQubeEnv('sonarqube') {
