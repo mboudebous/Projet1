@@ -16,6 +16,7 @@ pipeline {
                 git branch: 'master', credentialsId: 'ecde681b-5636-41da-aad5-6704576d1392', url: 'https://github.com/mboudebous/Projet1.git'
             }
         }
+        
     stage('Restore') {
     steps {
         sh "dotnet restore /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
@@ -25,7 +26,8 @@ pipeline {
     steps {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
-}    stage('test') {
+}    
+    stage('test') {
     steps {
         sh "dotnet test /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
