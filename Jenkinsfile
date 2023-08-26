@@ -32,7 +32,18 @@ pipeline {
         sh "dotnet test /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }   */
-       
+               stage('Build and Analyze') {
+            steps {
+                // Compilez votre projet ici (ex : npm install, dotnet build, etc.)
+
+                // Exécutez l'analyse SonarQube
+                script {
+                    def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
+                    def scannerCmd = "${scannerHome}/bin/sonar-scanner"
+                    sh "${scannerCmd} -Dsonar.projectKey=your-project-key -Dsonar.sources=your-source-directory -Dsonar.host.url=your-sonarqube-url -Dsonar.login=your-sonar-token"
+                }
+            }
+        }
        
        
     }          
