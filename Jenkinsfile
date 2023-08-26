@@ -26,30 +26,9 @@ pipeline {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }   
-   
-
-        
-
-        
-        stage("Docker Build & Push"){
-            steps{
-                script{
-                   withDockerRegistry(credentialsId: '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', toolName: 'Docker', url: 'https://index.docker.io/v1/') {
-  
-
-
-                        
-                        sh "docker build -t img-projet ."
-                        sh "docker tag img-projet imas10/projet:latest "
-                        sh "docker push imas10/projet:latest "
-                       
-                    }
-                }
-            }
-        }
-        
-        
-        
+       
+       
+       
        
     }          
 
