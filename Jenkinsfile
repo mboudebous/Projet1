@@ -22,18 +22,20 @@ pipeline {
         sh "dotnet restore /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }
+     stage('build') {
+    steps {
+        // Spécifiez le chemin complet du fichier .csproj
+        sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
+    }
+}   
+        stage('test') {
+    steps {
+        // Spécifiez le chemin complet du fichier .csproj
+        sh "dotnet test /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
+    }
+}
         
-        
-          stage('Build and Test C#') {
-            steps {
-                script {
-                sh 'dotnet restore /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj'
-                sh 'dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj'
-                sh 'dotnet test /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj'
-                }
-            }
-        
-        }
+      
        stage("Sonarqube Analysis "){
             steps{
                 withSonarQubeEnv('sonarqube') {
