@@ -32,17 +32,20 @@ pipeline {
         sh "dotnet test /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }   */
-               stage("Sonarqube Analysis "){
-            steps{
-                withSonarQubeEnv('sonarqube') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Projet1 \
-                    -Dsonar.java.binaries=. \
-                    -Dsonar.projectKey=Projet1 '''
-    
-                }
-            }
-        }
-       
+               
+   stage('SonarQube Analysis') {
+  steps{
+    script {
+  def mvn = tool 'maven2';
+    withSonarQubeEnv() {
+      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=java -DskipTests=true"
+      
+    }
+  }
+  
+    }
+  } */
+  
        
     }          
 
