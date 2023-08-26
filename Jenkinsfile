@@ -19,21 +19,7 @@ pipeline {
     
         
         
-        stage('Build and Test 222C#') {
-    steps {
-        script {
-            // Spécifiez le chemin complet du fichier .csproj
-            def projectPath = "${WORKSPACE}/var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
-            
-            // Assurez-vous que le chemin du projet est correct
-            echo "Chemin du projet : ${projectPath}"
-            
-            // Exécutez dotnet restore avec le chemin du projet
-            sh "dotnet restore ${projectPath}"
-        }
-    }
-        }
-        stage('Build and Test C#') {
+          stage('Build and Test C#') {
             steps {
                 script {
                 def projectPath = "${WORKSPACE}/var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
