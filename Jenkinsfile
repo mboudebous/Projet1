@@ -36,7 +36,7 @@ pipeline {
    stage('SonarQube Analysis') {
   steps{
     script {
-  def mvn = tool 'maven2';
+  def mvn = tool 'maven3';
     withSonarQubeEnv() {
       sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=java -DskipTests=true"
       
