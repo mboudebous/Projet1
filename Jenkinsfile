@@ -1,6 +1,10 @@
 pipeline {
     agent any 
     environment {
+    DOTNET_HOME = tool name: 'DotNet', type: 'hudson.plugins.dotnet.DotNetToolInstallation'
+}
+
+    environment {
         SONARQUBE_SCANNER_HOME = tool 'SonarScanner', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
         DOTNET_HOME = tool 'DotNet', type: 'hudson.plugins.dotnet.DotNetToolInstallation'
     }
