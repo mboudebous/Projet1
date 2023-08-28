@@ -1,9 +1,5 @@
 pipeline {
     agent any 
-    environment {
-    DOTNET_HOME = tool name: 'DotNet', type: 'hudson.plugins.dotnet.DotNetToolInstallation'
-        SONARQUBE_SCANNER_HOME = tool 'SonarScanner', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
-    }
     
      tools{
         jdk 'OpenJDK17'
@@ -32,21 +28,7 @@ pipeline {
     }
 }    
 
-               
-        stage('Static Code Analysis') {
-            steps {
-                script {
-                    // Run SonarQube analysis
-                    withSonarQubeEnv('SonarScanner') {
-                        sh """
-                        ${env.SONARQUBE_SCANNER_HOME}/SonarScanner.MSBuild.exe begin /k:'Test' /n:'Projet1' /v:'1.0' /d:sonar.host.url='localhost:8094' /d:sonar.login='squ_64f313044c25a53766b57ab00212d29f8ce614bc'
-                        ${env.MSBUILD_HOME}/msbuild.exe /t:Rebuild /p:Configuration=${buildConfig} /p:Platform=AnyCPU
-                        ${env.SONARQUBE_SCANNER_HOME}/SonarScanner.MSBuild.exe end /d:sonar.login='squ_64f313044c25a53766b57ab00212d29f8ce614bc'
-                        """
-                    }
-                }
-            }
-        }
+       
   
        
     }          
