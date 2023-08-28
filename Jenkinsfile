@@ -30,9 +30,9 @@ pipeline {
 stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarScanner') {
-                    // Run SonarQube analysis
-                    // Example: msbuild /t:Rebuild
-                    // Example: "C:\Path\to\SonarScanner.MSBuild.exe" end
+                     Run SonarQube analysis
+                    Example: msbuild /t:Rebuild
+                    Example: "C:\Path\to\SonarScanner.MSBuild.exe" end
                 }
             }
         }
