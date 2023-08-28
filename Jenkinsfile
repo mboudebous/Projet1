@@ -37,7 +37,7 @@ stage('SonarQube Analysis') {
                 // Étape pour exécuter l'analyse SonarQube
                 withSonarQubeEnv('SonarScanner') {
                     // Assurez-vous d'ajuster 'Nom_de_votre_installation_SonarQube' à votre configuration réelle
-                    sh 'dotnet sonarscanner begin /k:"projet1" /d:sonar.host.url="localhost:8094" /d:sonar.login="squ_64f313044c25a53766b57ab00212d29f8ce614bc"'
+                    sh 'dotnet sonarscanner begin /k:"Test" /d:sonar.host.url="localhost:8094" /d:sonar.login="squ_64f313044c25a53766b57ab00212d29f8ce614bc"'
                     sh 'dotnet build MyDotNetProject.sln'
                     sh 'dotnet sonarscanner end /d:sonar.login="squ_64f313044c25a53766b57ab00212d29f8ce614bc"'
                 }
