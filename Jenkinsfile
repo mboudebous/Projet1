@@ -1,5 +1,10 @@
 pipeline {
     agent any 
+    environment {
+        // Define environment variables as needed
+        DOTNET_ROOT = tool name: 'dotnet', type: 'Tool'
+        SONAR_SCANNER_HOME = tool name: 'SonarScanner', type: 'Tool'
+    }
     
      tools{
         jdk 'OpenJDK17'
@@ -29,13 +34,14 @@ pipeline {
 }    
 stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarScanner') {
-                     Run SonarQube analysis
-                    Example: msbuild /t:Rebuild
-                    Example: "C:\Path\to\SonarScanner.MSBuild.exe" end
+                // Run SonarQube analysis using the SonarScanner for .NET
+                script {
+                    def sonarCmd = "${env.SONAR_SCANNER_HOME}/sonar-scanner"
+                    withSonarQubeEnv('SonarScanner') {
+                        sh label: 'SonarQube Analysis', script: sonarCmd
+                    }
                 }
             }
-        }
        
   
        
