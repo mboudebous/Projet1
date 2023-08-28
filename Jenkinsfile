@@ -27,11 +27,7 @@ pipeline {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }    
-    /* stage('test') {
-    steps {
-        sh "dotnet test /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
-    }
-}   */
+
                
  stage('Build and Analyze') {
             steps {
@@ -41,7 +37,8 @@ pipeline {
                     def sonarLogin = 'squ_ff98a54d2c9e4570aca14538ee78adc632de2bae'
                     
                     // Build your .NET project (e.g., dotnet build)
-                    sh 'dotnet build'
+                            sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
+
 
                     // Run the SonarScanner for .NET
                     sh "${scannerCmd} begin /k:${sonarKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}"
