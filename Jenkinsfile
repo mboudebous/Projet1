@@ -27,7 +27,15 @@ pipeline {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }    
-
+stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarScanner') {
+                    // Run SonarQube analysis
+                    // Example: msbuild /t:Rebuild
+                    // Example: "C:\Path\to\SonarScanner.MSBuild.exe" end
+                }
+            }
+        }
        
   
        
