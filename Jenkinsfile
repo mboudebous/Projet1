@@ -36,7 +36,7 @@ pipeline {
  stage('Build and Analyze') {
             steps {
                 script {
-                    def scannerCmd = "${SCANNER_HOME}/SonarScanner.MSBuild.dll"
+                    def scannerCmd = "${SCANNER_HOME}/SonarScanner.SonarScanner.MSBuild.Common.dll"
                     def sonarKey = 'Test'
                     def sonarUrl = 'http://localhost:8094/' // Replace with your SonarQube server URL
                     def sonarLogin = 'squ_ff98a54d2c9e4570aca14538ee78adc632de2bae'
