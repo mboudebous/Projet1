@@ -27,7 +27,7 @@ pipeline {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }   
-node {
+
   stage('SCM') {
     checkout scm
   }
@@ -42,5 +42,5 @@ node {
 }
 
 }
-}
+
 
