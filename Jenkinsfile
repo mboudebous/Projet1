@@ -36,7 +36,11 @@ pipeline {
                     echo "Scanner Home: ${scannerHome}"
                 }
             }
-        }    
+        }  
+        node {
+  stage('SCM') {
+    checkout scm
+  }
      stage('SonarQube Analysis') {
          steps{
          
