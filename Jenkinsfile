@@ -1,4 +1,4 @@
-/*pipeline {
+pipeline {
     agent any 
  
   
@@ -6,7 +6,11 @@
         jdk 'OpenJDK17'
         maven 'maven3'
     }
-   
+   environment {
+        SONARQUBE_TOKEN = credentials('squ_64f313044c25a53766b57ab00212d29f8ce614bc) // Assurez-vous de configurer le token SonarQube
+        SONARQUBE_PROJECT_KEY = 'Test'
+        SONARQUBE_SERVER_URL = 'http://localhost:9000/' // Remplacez par l'URL de votre serveur SonarQube
+    }
     
    
     
@@ -36,22 +40,36 @@
                     echo "Scanner Home: ${scannerHome}"
                 }
             }
-        }  */
-
-  
-     node {
-  stage('SCM') {
-    checkout scm
-  }
-  stage('SonarQube Analysis') {
-    def scannerHome = tool 'SonarScanner for MSBuild'
-    withSonarQubeEnv() {
-      //sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"Projet1\""
-      sh "dotnet build"
-      //sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
+        }  
     }
-  }
+stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarScanner'
+                    withSonarQubeEnv('SonarQube') {
+                        sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=${SONARQUBE_SERVER_URL} \
+                            -Dsonar.login=${SONARQUBE_TOKEN}
+                        """
+                    }
+                }
+            }
+        }
 }
+}
+                                      }
+  
+
 
   
 
