@@ -40,7 +40,7 @@ pipeline {
      stage('SonarQube Analysis') {
          steps{
          
-      withSonarQubeEnv('SonarScanner') {
+      withSonarQubeEnv('SonarScanner for MSBuild') {
       sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"Projet\""
       sh "dotnet build"
       sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
