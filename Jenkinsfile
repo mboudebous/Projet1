@@ -30,6 +30,8 @@ pipeline {
 }   
         
      stage('SonarQube Analysis') {
+         steps{
+         
        def scannerHome = tool 'SonarScanner for MSBuild'
       withSonarQubeEnv() {
       sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"Projet\""
@@ -37,6 +39,7 @@ pipeline {
       sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
     }
   }
+     }
 }
 
     }
