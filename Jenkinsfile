@@ -1,5 +1,11 @@
 pipeline {
     agent any 
+     environment {
+        // Define environment variables as needed
+        SONARQUBE_URL = 'http://localhost:9000'
+        SONARQUBE_TOKEN = 'squ_64f313044c25a53766b57ab00212d29f8ce614bc'
+    }
+
   
      tools{
         jdk 'OpenJDK17'
@@ -29,16 +35,16 @@ pipeline {
 }    
 stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarScanner') {
-                    // Run SonarQube Scanner for .NET
-                    bat '''\
-                    "C:\\Path\\To\\SonarScanner.MSBuild.exe" begin /k:"Test" /d:sonar.host.url="localhost:9000" /d:sonar.login="squ_64f313044c25a53766b57ab00212d29f8ce614bc"
-                    "C:\\Path\\To\\MSBuild.exe" MySolution.sln /t:Rebuild
-                    "C:\\Path\\To\\SonarScanner.MSBuild.exe" end /d:sonar.login="squ_64f313044c25a53766b57ab00212d29f8ce614bc"
-                    '''
-                }
+                // Run SonarScanner for .NET
+                sh """
+                dotnet tool install --global dotnet-sonarscanner
+                dotnet sonarscanner begin /k:Test /d:sonar.host.url=$SONARQUBE_URL /d:sonar.login=$SONARQUBE_TOKEN
+                dotnet build MySolution.sln
+                dotnet sonarscanner end /d:sonar.login=$SONARQUBE_TOKEN
+                """
             }
         }
+    }
 
 }
 }
