@@ -1,10 +1,8 @@
 pipeline {
     agent any 
      environment {
-        SONARQUBE_URL = 'http://localhost:9000'
-        SONARQUBE_TOKEN = credentials('squ_64f313044c25a53766b57ab00212d29f8ce614bc')
+        SONARQUBE_URL = 'http://localhost:9000/'
     }
-
   
      tools{
         jdk 'OpenJDK17'
@@ -32,22 +30,24 @@ pipeline {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }    
-  stage('SonarQube Analysis') {
+stage('SonarQube Analysis') {
             steps {
                 script {
                     def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
                     def scannerCmd = "${scannerHome}/bin/SonarScanner.MSBuild.exe"
 
-                    withSonarQubeEnv('Your_SonarQube_Server') {
+                    withSonarQubeEnv('Votre_Serveur_SonarQube') {
                         sh """
-                        ${scannerCmd} begin /k:Test /d:sonar.host.url=${SONARQUBE_URL} /d:sonar.login=${SONARQUBE_TOKEN}
+                        ${scannerCmd} begin /k:Test /d:sonar.host.url=${SONARQUBE_URL}
                         dotnet build MySolution.sln
-                        ${scannerCmd} end /d:sonar.login=${SONARQUBE_TOKEN}
+                        ${scannerCmd} end
                         """
                     }
                 }
             }
         }
+    }
+
     }
   
 
