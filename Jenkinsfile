@@ -31,7 +31,7 @@ pipeline {
     stage('Setup') {
             steps {
                 script {
-                    def scannerHome = tool 'SonarScanner for MSBuild'
+                    def scannerHome = tool 'SonarScanner'
                     // Vous pouvez maintenant utiliser scannerHome
                     echo "Scanner Home: ${scannerHome}"
                 }
