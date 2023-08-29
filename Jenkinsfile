@@ -38,9 +38,9 @@ stage('SonarQube Analysis') {
                 // Run SonarScanner for .NET
                 sh """
                 dotnet tool install --global dotnet-sonarscanner
-                dotnet sonarscanner begin /k:Test /d:sonar.host.url=$SONARQUBE_URL /d:sonar.login=$SONARQUBE_TOKEN
+                dotnet dotnet-sonarscanner begin /k:Test /d:sonar.host.url=$SONARQUBE_URL /d:sonar.login=$SONARQUBE_TOKEN
                 dotnet build MySolution.sln
-                dotnet sonarscanner end /d:sonar.login=$SONARQUBE_TOKEN
+                dotnet dotnet-sonarscanner end /d:sonar.login=$SONARQUBE_TOKEN
                 """
             }
         }
