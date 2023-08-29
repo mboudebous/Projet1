@@ -1,12 +1,15 @@
 pipeline {
     agent any 
- 
+      environment {
+        SCANNER_HOME=tool 'SonarScanner'
+    }
   
      tools{
         jdk 'OpenJDK17'
         maven 'maven3'
     }
-
+   
+    
    
     
     stages{
@@ -26,11 +29,16 @@ pipeline {
     steps {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
-}   
-
-
-}
-
-}
-
-
+}    
+  stage("Sonarqube Analysis "){
+            steps{
+                withSonarQubeEnv('SonarScanner') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Test \
+                    -Dsonar.java.binaries=. \
+                    -Dsonar.projectKey=Test '''
+    
+                }
+            }
+        }
+    }
+    }
