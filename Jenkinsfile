@@ -27,7 +27,8 @@ pipeline {
     steps {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
-}    
+}   
+        
 stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner for MSBuild'
     withSonarQubeEnv() {
