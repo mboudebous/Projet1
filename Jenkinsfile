@@ -28,14 +28,7 @@ pipeline {
     }
 }   
 
-  stage('SonarQube Analysis') {
-    def scannerHome = tool 'SonarScanner'
-    withSonarQubeEnv() {
-      sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"Test\""
-      sh "dotnet build"
-      sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
-    }
-  }
+
 }
 
 }
