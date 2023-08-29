@@ -37,12 +37,8 @@
                 }
             }
         }  */
-        node {
-  stage('SCM') {
-      steps {
-    checkout scm
-      }
-  }
+
+  
      node {
   stage('SCM') {
     checkout scm
