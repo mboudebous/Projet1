@@ -27,39 +27,20 @@ pipeline {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }   
-podTemplate(containers: [
-    containerTemplate(
-        name: 'dotnet', 
-        image: 'mcr.microsoft.com/dotnet/sdk:6.0', 
-        command: 'sleep', 
-        args: '30d'
-        )
-])    {
-
-
-    node(POD_LABEL) {
-        stage('Sonarqube Scan') {
-            container('dotnet') {
-                stage('Sonarqube Scan') {
-			script{
-				checkout scm
-			}
-                    catchError() {
-						sh '''
-                        dotnet tool install --global dotnet-sonarscanner --version 5.8.0
-						export PATH="$PATH:/root/.dotnet/tools"
-						apt-get update && apt install default-jre -y 
-						/root/.dotnet/tools/dotnet-sonarscanner begin /k:"api.identity.ciba" /d:sonar.host.url="http://sonarqube.i01.paytr.com:9000"  /d:sonar.login="sqp_xxxxxxxxxxxx24ba7bab26b913d2"
-						dotnet build
-						/root/.dotnet/tools/dotnet-sonarscanner end /d:sonar.login="sqp_xxxxxx0xxxxbab26b913d2"
-                        '''
-                    }
-                }
-            }
-        }
-
+node {
+  stage('SCM') {
+    checkout scm
+  }
+  stage('SonarQube Analysis') {
+    def scannerHome = tool 'SonarScanner'
+    withSonarQubeEnv() {
+      sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"Test\""
+      sh "dotnet build"
+      sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
     }
+  }
+}
 
 }
 }
-}
+
