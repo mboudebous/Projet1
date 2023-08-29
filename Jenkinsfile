@@ -34,7 +34,7 @@ stage('SonarQube Analysis') {
             steps {
                 script {
                     def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
-                    def scannerCmd = "${scannerHome}/SonarScanner.MSBuild.Common.dll"
+                    def scannerCmd = "${scannerHome}/sonar-scanner-4.8.1.3023"
 
                     withSonarQubeEnv('SonarScanner') {
                         sh """
