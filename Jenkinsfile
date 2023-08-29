@@ -1,4 +1,4 @@
-pipeline {
+/*pipeline {
     agent any 
  
   
@@ -36,29 +36,27 @@ pipeline {
                     echo "Scanner Home: ${scannerHome}"
                 }
             }
-        }  
+        }  */
         node {
   stage('SCM') {
       steps {
     checkout scm
       }
   }
-     stage('SonarQube Analysis') {
-         steps{
-         
-      withSonarQubeEnv('SonarScanner for MSBuild') {
+     node {
+  stage('SCM') {
+    checkout scm
+  }
+  stage('SonarQube Analysis') {
+    def scannerHome = tool 'SonarScanner for MSBuild'
+    withSonarQubeEnv() {
       sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"Projet\""
       sh "dotnet build"
       sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
     }
   }
-     }
 }
 
-    }
-    
-
-}
   
 
 
