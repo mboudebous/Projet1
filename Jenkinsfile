@@ -28,11 +28,18 @@ pipeline {
         sh "dotnet build /var/lib/jenkins/workspace/projetfinal/PokemonApi_Integration_Tests/PokemonApi_Integration_Tests.csproj"
     }
 }   
-        
+    stage('Setup') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarScanner for MSBuild'
+                    // Vous pouvez maintenant utiliser scannerHome
+                    echo "Scanner Home: ${scannerHome}"
+                }
+            }
+        }    
      stage('SonarQube Analysis') {
          steps{
          
-       def scannerHome = tool 'SonarScanner for MSBuild'
       withSonarQubeEnv('SonarScanner') {
       sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"Projet\""
       sh "dotnet build"
