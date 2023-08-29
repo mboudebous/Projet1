@@ -7,7 +7,7 @@ pipeline {
         maven 'maven3'
     }
    environment {
-        SONARQUBE_TOKEN = credentials('squ_64f313044c25a53766b57ab00212d29f8ce614bc) // Assurez-vous de configurer le token SonarQube
+        SONARQUBE_TOKEN = credentials('squ_64f313044c25a53766b57ab00212d29f8ce614bc') // Assurez-vous de configurer le token SonarQube
         SONARQUBE_PROJECT_KEY = 'Test'
         SONARQUBE_SERVER_URL = 'http://localhost:9000/' // Remplacez par l'URL de votre serveur SonarQube
     }
