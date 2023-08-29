@@ -36,7 +36,7 @@ stage('SonarQube Analysis') {
                     def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
                     def scannerCmd = "${scannerHome}/bin/SonarScanner.MSBuild.exe"
 
-                    withSonarQubeEnv('Votre_Serveur_SonarQube') {
+                    withSonarQubeEnv('SonarScanner') {
                         sh """
                         ${scannerCmd} begin /k:Test /d:sonar.host.url=${SONARQUBE_URL}
                         dotnet build MySolution.sln
